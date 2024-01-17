@@ -32,7 +32,8 @@ def article(article_name: str):
     filename = article_name.lower().replace(" ", "_")
 
     with open(f"articles/{filename}.md", "r") as f:
-        content = markdown2.markdown(f.read())
+        # content = markdown2.markdown(f.read())
+        content = f.read()
 
     return render_template("article.html", content=content)
 
