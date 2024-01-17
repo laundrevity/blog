@@ -1,9 +1,11 @@
 from flask import Flask, render_template
-import markdown2
+from markdown2 import Markdown
+import re
 import os
 
 
 app = Flask(__name__)
+markdowner = Markdown(extras=["fenced-code-blocks"])
 
 
 def get_article_names():
@@ -30,10 +32,24 @@ def index():
 @app.route("/article/<article_name>", methods=["GET"])
 def article(article_name: str):
     filename = article_name.lower().replace(" ", "_")
+    math_sections = []
 
     with open(f"articles/{filename}.md", "r") as f:
-        # content = markdown2.markdown(f.read())
         content = f.read()
+
+        # Extract math sections
+        def replace_math(m):
+            math_sections.append(m.group(0))
+            return f"<!--MATH{len(math_sections)-1}-->"
+
+        content = re.sub(r"(\$\$[\s\S]+?\$\$|\$[^$]*\$)", replace_math, content)
+
+        # convert markdown to HTML
+        content = markdowner.convert(content)
+
+        # reinsert math sections
+        for i, math in enumerate(math_sections):
+            content = content.replace(f"<!--MATH{i}-->", math)
 
     return render_template("article.html", content=content)
 

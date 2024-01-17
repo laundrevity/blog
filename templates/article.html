@@ -4,4 +4,9 @@
 <div class="content">
     {{ content | safe }}
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        hljs.highlightAll();
+    });
+</script>
 {% endblock %}
