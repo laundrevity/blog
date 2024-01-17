@@ -16,10 +16,11 @@
         <label for="article-select">Choose an article:</label>
         <select id="article-select" onchange="location = this.value;">
             <option value="#">Select an article</option>
-            <option value="/article/yield_and_vol">Yield and implied volatility</option>
-            <option value="/article/linear_hedging">Linear hedging</option>
-            <!-- Add more articles here -->
+            {% for article in articles %}
+            <option value="/article/{{ article }}">{{ article }}</option>
+            {% endfor %}
         </select>
+
     </div>
     {% block content %}
     {% endblock %}
