@@ -35,7 +35,7 @@ jobs:
             sudo systemctl reload nginx
 
             # Systemd service
-            sudo cp yourapp.service /etc/systemd/system/
+            sudo cp blog.service /etc/systemd/system/
             sudo systemctl daemon-reload
             sudo systemctl restart blog
 
