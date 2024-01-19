@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.DIGITALOCEAN_USER }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            cd /path/to/your/app
+            cd ~/blog
             git pull
             kill $(cat gunicorn.pid)
             ./run.sh &
