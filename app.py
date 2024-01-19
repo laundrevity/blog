@@ -1,11 +1,33 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from logging.handlers import RotatingFileHandler
 from markdown2 import Markdown
+import logging
 import re
 import os
 
 
 app = Flask(__name__)
 markdowner = Markdown(extras=["fenced-code-blocks"])
+
+# Configure Logging
+handler = RotatingFileHandler("app.log", maxBytes=10000, backupCount=3)
+handler.setLevel(logging.INFO)
+app.logger.addHandler(handler)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+gunicorn_error_logger = logging.getLogger("gunicorn.error")
+app.logger.handlers.extend(gunicorn_error_logger.handlers)
+app.logger.setLevel(logging.DEBUG)
+
+
+@app.before_request
+def log_request_info():
+    app.logger.info(
+        f"Remote Addr: {request.remote_addr}, Request: {request.method} {request.url}"  # , Agent: {request.user_agent}"
+    )
 
 
 def get_article_names():
