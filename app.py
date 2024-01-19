@@ -9,14 +9,23 @@ import os
 app = Flask(__name__)
 markdowner = Markdown(extras=["fenced-code-blocks"])
 
-# Configure Logging
-handler = RotatingFileHandler("app.log", maxBytes=10000, backupCount=3)
-handler.setLevel(logging.INFO)
-app.logger.addHandler(handler)
+# Configure Rotating File Handler
+file_handler = RotatingFileHandler("app.log", maxBytes=10_000_000, backupCount=3)
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(
+    logging.Formatter(
+        "%(asctime)s %(levelname)s: %(message)s " "[in %(pathname)s:%(lineno)d]"
+    )
+)
 
-# create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+# Configure Stream Handler for stdout
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.DEBUG)
+stream_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s: %(message)s"))
+
+# Add handlers to the Flask app's logger
+app.logger.addHandler(file_handler)
+app.logger.addHandler(stream_handler)
 
 gunicorn_error_logger = logging.getLogger("gunicorn.error")
 app.logger.handlers.extend(gunicorn_error_logger.handlers)
