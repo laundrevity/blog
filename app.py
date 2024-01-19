@@ -1,3 +1,4 @@
+from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import Flask, render_template, request
 from logging.handlers import RotatingFileHandler
 from markdown2 import Markdown
@@ -7,10 +8,13 @@ import os
 
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1
+)
 markdowner = Markdown(extras=["fenced-code-blocks"])
 
 # Configure Rotating File Handler
-file_handler = RotatingFileHandler("app.log", maxBytes=10_000_000, backupCount=3)
+file_handler = RotatingFileHandler("app.log", maxBytes=1_000_000, backupCount=3)
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(
     logging.Formatter(
