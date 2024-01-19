@@ -1,0 +1,12 @@
+[Unit]
+Description=Gunicorn instance to serve my Flask app
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/root/blog/
+ExecStart=/root/blog/venv/bin/gunicorn --workers 4 --bind 0.0.0.0:8000 --log-level debug --pid gunicorn.pid app:app
+
+[Install]
+WantedBy=multi-user.target
