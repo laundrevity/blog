@@ -1,4 +1,4 @@
-WIP
+WIP, <a href="https://github.com/laundrevity/passive">repo is here</a>
 
 ```rust
 use crate::game::Game;
