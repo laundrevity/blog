@@ -42,4 +42,4 @@ jobs:
             # Copy static for nginx
             sudo rm -rf /var/www/blog
             sudo mkdir -p /var/www/blog
-            sudo mv /root/blog/static /var/www/blog
+            sudo mv /root/blog/static/ /var/www/blog
