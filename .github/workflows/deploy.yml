@@ -23,7 +23,8 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
             cd ~/blog
-            git pull
+            git fetch --all
+            git reset --hard origin/master
             rm -rf venv
             python3.12 -m venv venv
             source venv/bin/activate
