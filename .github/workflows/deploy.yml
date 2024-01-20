@@ -29,6 +29,11 @@ jobs:
             source venv/bin/activate
             pip install -r requirements.txt
 
+            # Copy static for nginx
+            sudo rm -rf /var/www/blog
+            sudo mkdir -p /var/www/blog
+            sudo mv /root/blog/static/ /var/www/blog
+
             # Nginx configuration
             sudo cp nginx.conf /etc/nginx/sites-available/blog
             sudo ln -sf /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/
@@ -38,8 +43,3 @@ jobs:
             sudo cp blog.service /etc/systemd/system/
             sudo systemctl daemon-reload
             sudo systemctl restart blog
-
-            # Copy static for nginx
-            sudo rm -rf /var/www/blog
-            sudo mkdir -p /var/www/blog
-            sudo mv /root/blog/static/ /var/www/blog
