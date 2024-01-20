@@ -1,0 +1,23 @@
+FROM nginx:latest
+
+# Create the necessary directories
+RUN mkdir -p /etc/nginx/sites-available
+RUN mkdir -p /etc/nginx/sites-enabled
+
+# Copy default Nginx configuration file into the container
+COPY default.nginx.conf /etc/nginx/nginx.conf
+
+# Copy local Nginx site configuration file into the container
+COPY local.nginx.conf /etc/nginx/sites-available/blog
+
+# Create the symbolic link
+RUN ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
+
+# Copy static folder to /var
+COPY static /var/www/blog/static
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx when the container launches
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  gunicorn:
+    build:
+      context: .
+      dockerfile: Dockerfile.gunicorn
+    container_name: gunicorn
+    ports:
+      - "8000:8000" 
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - gunicorn

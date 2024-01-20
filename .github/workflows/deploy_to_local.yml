@@ -1,0 +1,24 @@
+name: Deploy to Local
+
+on:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - 'README.md'  # Ignore changes to files like README
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Add additional steps for testing or other checks
+      
+      - name: Deploy to Local
+        run: |
+          docker compose down
+          docker system prune -af
+          docker compose up -d --build
