@@ -5,8 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile.gunicorn
     container_name: gunicorn
-    volumes:
-      - .:/usr/src/app
     ports:
       - "8000:8000" 
 
