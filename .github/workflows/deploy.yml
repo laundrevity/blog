@@ -13,6 +13,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Install LaTeX and ImageMagick
+      - name: Install LaTeX and ImageMagick
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra imagemagick
+
+      # Generate Diagrams
+      - name: Generate Diagrams
+        run: |
+          mkdir -p static/tikz
+          pdflatex body_header.tex 
+          convert -density 300 body_header.pdf -quality 90 static/tikz/body_header.png
+          pdflatex diagram.tex 
+          convert -density 300 diagram.pdf -quality 90 static/tikz/diagram.png
+
       # Add additional steps for testing or other checks
 
       - name: Deploy to DigitalOcean
