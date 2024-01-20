@@ -38,3 +38,8 @@ jobs:
             sudo cp blog.service /etc/systemd/system/
             sudo systemctl daemon-reload
             sudo systemctl restart blog
+
+            # Copy static for nginx
+            sudo rm -rf /var/www/blog
+            sudo mkdir -p /var/www/blog
+            sudo mv /root/blog/static /var/www/blog
