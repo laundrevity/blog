@@ -18,4 +18,4 @@ Second, we must embrace complexity in political discourse. This is a difficult a
 
 Finally, we must cultivate a culture of skepticism—not cynicism, but a healthy questioning of narratives that seem too tidy. A democracy cannot survive without an informed citizenry capable of distinguishing between coherence and truth.
 
-The history of ideological arbitrage is a cautionary tale. When the contradictions of a system are left to fester, they create opportunities for false narratives to dominate. In 20th-century Europe, this dynamic paved the way for fascism. Today, in America, it threatens to fracture our democracy. The choice before us is clear: Confront
+The history of ideological arbitrage is a cautionary tale. When the contradictions of a system are left to fester, they create opportunities for false narratives to dominate. In 20th-century Europe, this dynamic paved the way for fascism. Today, in America, it threatens to fracture our democracy. The choice before us is clear: Confront the contradictions, or allow those who exploit them to define our future.
