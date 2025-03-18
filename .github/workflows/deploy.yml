@@ -11,36 +11,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      # Add additional steps for testing or other checks
-      
-      - name: Deploy to DigitalOcean
+      - name: Deploy via SSH to DigitalOcean
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DIGITALOCEAN_HOST }}
           username: ${{ secrets.DIGITALOCEAN_USER }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            cd ~/blog
-            git fetch --all
+            set -euxo pipefail
+
+            # Update the blog repo
+            cd /home/bloguser/blog
+            git fetch origin master
             git reset --hard origin/master
-            rm -rf venv
-            python3.12 -m venv venv
+
+            # Update virtual environment dependencies (without recreating)
             source venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
 
-            # Copy static for nginx
-            sudo rm -rf /var/www/blog
+            # Update static files for nginx
             sudo mkdir -p /var/www/blog
-            sudo mv /root/blog/static/ /var/www/blog
+            sudo rsync -a --delete /home/bloguser/blog/static/ /var/www/blog/static/
 
-            # Nginx configuration
-            sudo cp nginx.conf /etc/nginx/sites-available/blog
-            sudo ln -sf /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/
-            sudo systemctl reload nginx
+            # Ensure nginx configuration is current
+            sudo cp /home/bloguser/blog/nginx.conf /etc/nginx/sites-available/blog
+            sudo ln -sf /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
+            sudo nginx -t && sudo systemctl reload nginx
 
-            # Systemd service
-            sudo cp blog.service /etc/systemd/system/
+            # Update systemd service and restart blog
+            sudo cp /home/bloguser/blog/blog.service /etc/systemd/system/blog.service
             sudo systemctl daemon-reload
             sudo systemctl restart blog
+
