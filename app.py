@@ -14,7 +14,8 @@ app.wsgi_app = ProxyFix(
 markdowner = Markdown(extras=["fenced-code-blocks"])
 
 # Configure Rotating File Handler
-file_handler = RotatingFileHandler("app.log", maxBytes=1_000_000, backupCount=3)
+os.makedirs("logs", exist_ok=True)
+file_handler = RotatingFileHandler("logs/app.log", maxBytes=1_000_000, backupCount=3)
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(
     logging.Formatter(

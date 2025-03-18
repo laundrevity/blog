@@ -1,1 +1,10 @@
 venv/
+
+# Logs
+*.log*
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+
