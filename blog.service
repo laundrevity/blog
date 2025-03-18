@@ -1,12 +1,16 @@
 [Unit]
-Description=Gunicorn instance to serve my Flask app
-After=network.target
+Description=Gunicorn instance to serve Flask blog
+After=network.target nginx.service
+Requires=nginx.service
 
 [Service]
-User=root
-Group=www-data
-WorkingDirectory=/root/blog/
-ExecStart=/root/blog/venv/bin/gunicorn --workers 4 --bind 0.0.0.0:8000 --log-level debug --pid gunicorn.pid app:app
+User=bloguser
+Group=bloguser
+WorkingDirectory=/home/bloguser/blog
+ExecStart=/home/bloguser/blog/venv/bin/gunicorn --workers 4 --bind 0.0.0.0:8000 app:app
+Restart=always
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
+
