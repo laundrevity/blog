@@ -111,4 +111,8 @@ img {
     filter: none;
 }
 
+.invert-if-dark {
+    filter: invert(1) hue-rotate(180deg);
+}
+
 /* MathJax inherits color automatically */

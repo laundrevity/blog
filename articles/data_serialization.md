@@ -22,7 +22,7 @@ Here, each message format, like person, is detailed with attributes such as id, 
 
 <h3>Message structure in memory</h3>
 
-<img src="/static/tikz/header_body.png" alt="Memory Layout" width="50%">
+<img src="/static/tikz/header_body.png" class="invert-if-dark" alt="Memory Layout" width="50%">
 
 Figure 1: The memory layout of a serialized message, highlighting the header and data sections.
 
@@ -43,6 +43,6 @@ Following the header is the data section, which contains the serialized attribut
 ```
 then the data section would look like 
 
-<img src="/static/tikz/diagram.png" alt="Data Section Layout" width="50%">
+<img src="/static/tikz/diagram.png" class="invert-if-dark" alt="Data Section Layout" width="50%">
 
 for a message including the optional `account_id` attribute.
