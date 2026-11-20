@@ -33,7 +33,7 @@ Requires=nginx.service
 User=bloguser
 Group=bloguser
 WorkingDirectory=/home/bloguser/blog
-ExecStart=/home/bloguser/blog/venv/bin/gunicorn --workers 4 --bind 0.0.0.0:8000 app:app
+ExecStart=/home/bloguser/blog/venv/bin/gunicorn --workers 4 --bind 127.0.0.1:8000 app:app
 Restart=always
 RestartSec=5
 Environment="PATH=/home/bloguser/blog/venv/bin:/usr/bin:/bin"
